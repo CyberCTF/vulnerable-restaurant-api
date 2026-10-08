@@ -1,0 +1,9 @@
+{
+  "title": "Damn Vulnerable RESTaurant API",
+  "description": "An intentionally vulnerable restaurant API built with FastAPI and PostgreSQL. Starting as a low-privileged API user, chain API flaws such as broken authorization, weak JWT handling and injection to reach root on the server.",
+  "question": "Escalate from a low-privileged API user to root on the server.",
+  "category": "WEB",
+  "difficulty": 3,
+  "evidence_kind": "SECRET",
+  "capabilities": ["api-security", "broken-object-level-authorization", "jwt-attacks", "server-side-request-forgery", "command-injection", "privilege-escalation"]
+}

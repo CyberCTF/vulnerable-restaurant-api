@@ -1,0 +1,3 @@
+Dockerfile
+app/images/
+app/**/__pycache__/

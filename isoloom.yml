@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# Damn Vulnerable RESTaurant API Game (by Krzysztof Pranczk, theowni) as an Isoloom spec: the
+# FastAPI service, vendored unchanged in build/web/app/, built by its own Dockerfile (database
+# settings and start command baked in), and its PostgreSQL database.
+# `isoloom generate`, then `isoloom up docker`.
+version: 1
+name: vulnerable-restaurant-api
+
+networks:
+  lab: { cidr: 10.60.18.0/24, internet: false }
+
+machines:
+  db:
+    networks: { lab: 20 }
+    services: [{ port: 5432, name: postgres }]
+    resources: { cpus: 1, memory_mb: 512 }
+    docker:
+      build: build/db
+
+  web:
+    networks: { lab: 10 }
+    services: [{ port: 8091, name: api, http: true, publish: 8091 }]
+    depends_on: [db]
+    resources: { cpus: 1, memory_mb: 512 }
+    docker:
+      build: build/web
+
+checks:
+  - name: the API documentation answers
+    http: http://web:8091/docs
+    wait: 180
+  - name: the health check answers
+    http: http://web:8091/healthcheck
+  - name: the seeded menu is served
+    http: http://web:8091/menu
+  - name: the OpenAPI schema is served
+    http: http://web:8091/openapi.json
+
+message: |
+  The RESTaurant API answers at http://localhost:{{ machines.web.services.0.publish }}/ with its
+  Swagger documentation at /docs. Register a customer, then escalate from a low-privileged API
+  user to root on the server: there is one path.
