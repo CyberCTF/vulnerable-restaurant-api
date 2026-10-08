@@ -20,7 +20,7 @@ vulnerabilities in a bind-mounted source tree) is not part of this lab.
 
 ```bash
 isoloom generate
-isoloom up docker
+isoloom run docker
 ```
 
 Then open http://localhost:8091/docs. The same spec runs as Docker on a local VM (`docker-vm`),
