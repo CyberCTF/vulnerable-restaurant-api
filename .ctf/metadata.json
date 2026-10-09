@@ -4,6 +4,5 @@
   "question": "Escalate from a low-privileged API user to root on the server.",
   "category": "WEB",
   "difficulty": 3,
-  "evidence_kind": "SECRET",
-  "capabilities": ["api-security", "broken-object-level-authorization", "jwt-attacks", "server-side-request-forgery", "command-injection", "privilege-escalation"]
+  "evidence_kind": "SECRET"
 }
